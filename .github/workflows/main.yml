@@ -3,7 +3,7 @@ name: github pages
 on:
   push:
     branches:
-      - master
+      - source
 
 jobs:
   deploy:
@@ -32,7 +32,9 @@ jobs:
       - run: yarn build
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+        uses: s0/git-publish-subdir-action@master
+        env:
+          REPO: self
+          BRANCH: master
+          FOLDER: out
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
